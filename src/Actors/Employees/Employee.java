@@ -8,7 +8,7 @@ import Networking.ConnectionHandler;
  */
 public class Employee extends GenericActor {
 
-    public Employee(ConnectionHandler handler) {
+    public Employee(ConnectionHandler handler, int type) {
         super(handler, type);
     }
 }

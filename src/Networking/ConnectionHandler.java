@@ -30,9 +30,11 @@ public class ConnectionHandler extends Thread {
                     listener.onActorMessageRecived(this, GenericActor.ACTOR_CLIENT);
                 else if (message.equals(ActorConnectionListener.MESSAGE_EMPLOYEE))
                     listener.onActorMessageRecived(this, GenericActor.ACTOR_EMPLOYEE);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 

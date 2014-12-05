@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class ServerOffice implements ActorConnectionListener {
 
-    private final String MESSAGE_QUEUE_EMPTY = "#EMPTY";
 
+    private final String MESSAGE_QUEUE_EMPTY = "#EMPTY";
 
     private ServerSocket serverSocket;
     private ActorListener actorListener;
@@ -53,6 +53,7 @@ public class ServerOffice implements ActorConnectionListener {
     }
 
     public void onClientRemoved(GenericActor actor) {
+        actor.getHandler().sendMessage(ActorConnectionListener.MESSAGE_CLIENT_EXITED);
         actor.getHandler().dispose();
     }
 
