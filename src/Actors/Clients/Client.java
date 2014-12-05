@@ -8,7 +8,7 @@ import Networking.ConnectionHandler;
  */
 public class Client extends GenericActor {
 
-    public Client(ConnectionHandler handler,int type) {
+    public Client(ConnectionHandler handler, int type) {
         super(handler, type);
     }
 }

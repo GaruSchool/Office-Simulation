@@ -1,45 +1,38 @@
 package RemoteActors;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
  * Created by t.garuglieri on 05/12/14.
  */
-public class RemoteClient {
+public class RemoteEmployee implements RemoteEmployeeListener {
 
 
     public static final String MESSAGE_CLIENT = "#CLIENT_ENTERED";
     public static final String MESSAGE_EMPLOYEE = "#EMPLOYEE_DONE";
     public static final String MESSAGE_CLIENT_EXITED = "#CLIENT_EXITED";
+    public static final String MESSAGE_QUEUE_EMPTY = "#EMPTY";
+    public static final String MESSAGE_CLIENT_ID = "#ID ";
+
     private Socket socket;
+
+    private ConnectedHandler handler;
 
     public void connect(String ip, int port) {
         try {
             this.socket = new Socket(ip, port);
             this.onConnected();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void onConnected() {
-        sendMessage(MESSAGE_CLIENT);
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-
-            String response = reader.readLine();
-
-            if (response.equals(MESSAGE_CLIENT_EXITED))
-                this.socket.close();
-
-
-        } catch (IOException e) {
-            //TODO handle errors
-        }
+        this.handler = new ConnectedHandler(socket, this);
+        this.handler.start();
     }
 
 
@@ -53,6 +46,22 @@ public class RemoteClient {
                 e1.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onEmployeeMessageRecived(String message) {
+        if (message.equals(MESSAGE_QUEUE_EMPTY))
+            sendMessage(MESSAGE_EMPLOYEE);
+        else if (message.contains(MESSAGE_CLIENT_ID))
+            onClientDone(message);
+    }
+
+    private void onClientDone(String message) {
+        System.out.println(getId(message));
+    }
+
+    private String getId(String message) {
+        return message.replaceAll(MESSAGE_CLIENT_ID, "").replaceAll(" ", "");
     }
 
 }

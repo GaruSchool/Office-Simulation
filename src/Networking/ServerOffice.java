@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class ServerOffice implements ActorConnectionListener {
 
 
+    public static final String MESSAGE_CLIENT_ID = "#ID ";
     private final String MESSAGE_QUEUE_EMPTY = "#EMPTY";
-
     private ServerSocket serverSocket;
     private ActorListener actorListener;
     private ArrayList<ConnectionHandler> handlers;
@@ -62,7 +62,7 @@ public class ServerOffice implements ActorConnectionListener {
     }
 
     public void onEmployeeDone(GenericActor employee, GenericActor client) {
-        employee.getHandler().sendMessage(String.valueOf(client.getId()));
+        employee.getHandler().sendMessage(MESSAGE_CLIENT_ID + String.valueOf(client.getId()));
         onClientRemoved(client);
     }
 

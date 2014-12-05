@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class GenericCircularBuffer<T> {
 
     private static final int defaultCapacity = 5;
-    private T[] array;
     private final int maxSize;
+    private T[] array;
     private int coda = 0;
     private int testa = 0;
 
