@@ -20,6 +20,10 @@ public class Office implements ActorListener {
         this.serverOffice.start(DEFAULT_PORT);
     }
 
+    public void open(int port) {
+        this.serverOffice.start(port);
+    }
+
     @Override
     public void onActorAction(GenericActor actor) {
         if (actor.getType() == GenericActor.ACTOR_CLIENT) {
@@ -39,6 +43,7 @@ public class Office implements ActorListener {
     }
 
     private void handleClientEntered(GenericActor actor) {
+        System.out.println("Cliente aggiunto in coda");
         if (!QueueManagerHelper.getInstance().isFull()) {
             QueueManagerHelper.getInstance().addClient(actor);
         } else {
@@ -48,6 +53,7 @@ public class Office implements ActorListener {
 
     private void notifyActorDisconnected(GenericActor actor) {
         serverOffice.onClientRemoved(actor);
+        System.out.println("Cliente" + actor.getId() + " uscito dalla coda");
     }
 
     private void notifyEmptyQueue() {

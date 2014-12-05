@@ -49,7 +49,8 @@ public class ServerOffice implements ActorConnectionListener {
 
     @Override
     public void onActorMessageRecived(ConnectionHandler handler, int actorType) {
-        actorListener.onActorAction(new GenericActor(handler, actorType));
+        if (actorType != -1)
+            actorListener.onActorAction(new GenericActor(handler, actorType));
     }
 
     public void onClientRemoved(GenericActor actor) {
