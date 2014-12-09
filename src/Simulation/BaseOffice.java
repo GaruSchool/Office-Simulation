@@ -2,25 +2,29 @@ package Simulation;
 
 import Actors.GenericActor;
 import Networking.ServerOffice;
+import Queue.QueueManager;
 import Queue.QueueManagerHelper;
 
 
 /**
  * Created by cccp on 04/12/2014.
  */
-public class Office implements ActorListener {
+public abstract class BaseOffice implements ActorListener {
     public static final int DEFAULT_PORT = 9999;
     private ServerOffice serverOffice;
 
-    public Office() {
+    public BaseOffice() {
         this.serverOffice = new ServerOffice(this);
     }
 
     public void open() {
+        onOfficeOpened();
         this.serverOffice.start(DEFAULT_PORT);
     }
 
+
     public void open(int port) {
+        onOfficeOpened();
         this.serverOffice.start(port);
     }
 
@@ -38,27 +42,45 @@ public class Office implements ActorListener {
             GenericActor removedActor = QueueManagerHelper.getInstance().getCurrentClient();
             QueueManagerHelper.getInstance().removeClient();
             serverOffice.onEmployeeDone(actor, removedActor);
+            onEmployeeDone();
+            onClientLeave(removedActor);
         } else
             notifyEmptyQueue();
     }
 
     private void handleClientEntered(GenericActor actor) {
-        System.out.println("Cliente aggiunto in coda");
         if (!QueueManagerHelper.getInstance().isFull()) {
             QueueManagerHelper.getInstance().addClient(actor);
+            onClientEntered();
         } else {
             notifyActorDisconnected(actor);
+            onQueueFull();
         }
     }
 
     private void notifyActorDisconnected(GenericActor actor) {
         serverOffice.onClientRemoved(actor);
-        System.out.println("Cliente" + actor.getId() + " uscito dalla coda");
+    }
+
+    public QueueManager getQueue() {
+        return QueueManagerHelper.getInstance();
     }
 
     private void notifyEmptyQueue() {
         serverOffice.onQueueEmpty();
     }
+
+    public abstract void onOfficeOpened();
+
+    public abstract void onOfficeClosed();
+
+    public abstract void onClientEntered();
+
+    public abstract void onClientLeave(GenericActor client);
+
+    public abstract void onQueueFull();
+
+    public abstract void onEmployeeDone();
 
 
 }

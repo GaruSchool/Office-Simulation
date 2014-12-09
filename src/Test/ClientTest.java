@@ -1,19 +1,19 @@
 package Test;
 
-import RemoteActors.RemoteClient;
+import RemoteActors.RemoteEmployee;
 import Simulation.Office;
 
 /**
- * Created by cccp on 08/12/2014.
+ * Created by t.garuglieri on 05/12/14.
  */
-public class ClientTest {
-
+public class EmployeeTest {
     public static void main(String[] args) {
         new Thread() {
             @Override
             public void run() {
-                new RemoteClient().connect("127.0.0.1", Office.DEFAULT_PORT);
+                new RemoteEmployee().connect("127.0.0.1", Office.DEFAULT_PORT);
             }
         }.start();
+
     }
 }

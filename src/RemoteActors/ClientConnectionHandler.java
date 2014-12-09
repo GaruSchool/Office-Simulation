@@ -8,11 +8,11 @@ import java.net.Socket;
 /**
  * Created by t.garuglieri on 05/12/14.
  */
-public class ConnectedHandler extends Thread {
+public class ClientConnectionHandler extends Thread {
     private Socket socket;
     private RemoteEmployeeListener listener;
 
-    public ConnectedHandler(Socket socket, RemoteEmployeeListener listener) {
+    public ClientConnectionHandler(Socket socket, RemoteEmployeeListener listener) {
         this.socket = socket;
         this.listener = listener;
     }
@@ -23,8 +23,7 @@ public class ConnectedHandler extends Thread {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             while (socket.isConnected()) {
-
-
+                listener.onEmployeeMessageRecived(this, reader.readLine());
             }
         } catch (IOException e) {
             dispose();
@@ -34,7 +33,8 @@ public class ConnectedHandler extends Thread {
     private void dispose() {
 
         try {
-            this.socket.close();
+            if (!this.socket.isClosed())
+                this.socket.close();
             this.interrupt();
         } catch (IOException e) {
             //TODO NULL
