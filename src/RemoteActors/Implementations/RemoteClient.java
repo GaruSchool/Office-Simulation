@@ -20,4 +20,7 @@ public class RemoteClient extends BaseRemoteClient {
     public void onClientLeft() {
         System.out.println("Esco dal negozio");
     }
+
+    @Override
+    public void onOfficeClosed() {System.out.println("Ufficio chiuso");}
 }

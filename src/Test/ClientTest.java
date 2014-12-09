@@ -8,12 +8,13 @@ import Simulation.BaseOffice;
  */
 public class ClientTest {
     public static void main(String[] args) {
-        new Thread() {
-            @Override
-            public void run() {
-                new RemoteClient().connect("127.0.0.1", BaseOffice.DEFAULT_PORT);
-            }
-        }.start();
+        for (int i = 0; i < 15; i++)
+            new Thread() {
+                @Override
+                public void run() {
+                    new RemoteClient().connect("127.0.0.1", BaseOffice.DEFAULT_PORT);
+                }
+            }.start();
 
     }
 }

@@ -30,7 +30,7 @@ public class ServerOffice implements ActorConnectionListener {
             this.serverSocket = new ServerSocket(port);
             this.startConnectionHandling();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Porta " + port + "in uso");
         }
     }
 
@@ -48,7 +48,7 @@ public class ServerOffice implements ActorConnectionListener {
     }
 
     @Override
-    public void onActorMessageRecived(ConnectionHandler handler, int actorType) {
+    public  synchronized void onActorMessageRecived(ConnectionHandler handler, int actorType) {
         if (actorType != -1)
             actorListener.onActorAction(new GenericActor(handler, actorType));
     }

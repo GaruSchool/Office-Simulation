@@ -17,7 +17,6 @@ public class ClientConnectionHandler extends Thread {
         this.listener = listener;
     }
 
-
     @Override
     public void run() {
         try {

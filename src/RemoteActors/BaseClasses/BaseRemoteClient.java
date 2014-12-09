@@ -24,7 +24,7 @@ public abstract class BaseRemoteClient {
             this.socket = new Socket(ip, port);
             this.onConnected();
         } catch (IOException e) {
-            System.out.println("Impossibile connettersi al server");
+            onOfficeClosed();
         }
     }
 
@@ -32,7 +32,7 @@ public abstract class BaseRemoteClient {
 
         try {
             onClientEntered();
-            InputHelper.getInputInterface(InputHelper.INPUT_INTERFACE_KEYBOARD).getInput();
+            InputHelper.getInputInterface(InputHelper.INPUT_INTERFACE_DELAYED).getInput();
 
             sendMessage(MESSAGE_CLIENT);
 
@@ -70,4 +70,6 @@ public abstract class BaseRemoteClient {
     public abstract void onClientQueued();
 
     public abstract void onClientLeft();
+
+    public abstract void onOfficeClosed();
 }

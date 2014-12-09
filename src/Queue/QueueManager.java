@@ -11,9 +11,10 @@ public class QueueManager {
 
     private Object queueLock = new Object();
     private GenericCircularBuffer<GenericActor> clients;
+    private final int n = 1; //set this to 0
 
     public QueueManager(int queueSize) {
-        this.clients = new GenericCircularBuffer<GenericActor>(queueSize);
+        this.clients = new GenericCircularBuffer<GenericActor>(queueSize + n);
     }
 
     public void addClient(GenericActor newClient) {
@@ -62,6 +63,6 @@ public class QueueManager {
     }
 
     public int getMaxSize() {
-        return clients.getMaxSize();
+        return clients.getMaxSize() - n;
     }
 }

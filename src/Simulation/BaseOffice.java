@@ -22,7 +22,6 @@ public abstract class BaseOffice implements ActorListener {
         this.serverOffice.start(DEFAULT_PORT);
     }
 
-
     public void open(int port) {
         onOfficeOpened();
         this.serverOffice.start(port);

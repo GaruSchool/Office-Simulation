@@ -20,4 +20,11 @@ public class RemoteEmployee extends BaseRemoteEmployee {
     public void onEmployeeExited() {
         System.out.println("Impiegato uscito da lavoro!");
     }
+
+    @Override
+    public void onOfficeClosed() {
+        System.out.println("L'ufficio è ancora chiuso");
+    }
+
+
 }

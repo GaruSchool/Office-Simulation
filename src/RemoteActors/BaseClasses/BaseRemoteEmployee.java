@@ -17,7 +17,6 @@ public abstract class BaseRemoteEmployee implements RemoteEmployeeListener {
     public static final String MESSAGE_CLIENT_ID = "#ID ";
 
     private Socket socket;
-
     private ClientConnectionHandler handler;
 
     public void connect(String ip, int port) {
@@ -25,9 +24,10 @@ public abstract class BaseRemoteEmployee implements RemoteEmployeeListener {
             this.socket = new Socket(ip, port);
             this.onConnected();
         } catch (IOException e) {
-            e.printStackTrace();
+            onOfficeClosed();
         }
     }
+
 
     private void onConnected() {
         onEmployeeEntered();
@@ -79,4 +79,5 @@ public abstract class BaseRemoteEmployee implements RemoteEmployeeListener {
 
     public abstract void onEmployeeExited();
 
+    public abstract void onOfficeClosed();
 }

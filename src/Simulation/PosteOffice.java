@@ -19,19 +19,23 @@ public class PosteOffice extends BaseOffice {
     @Override
     public void onClientEntered() {
         System.out.println("Cliente Aggiunto!");
-        System.out.println("Stato Coda: " + getQueue().getSize() + "/" + getQueue().getMaxSize());
+        printQueueInfo();
+    }
+
+    private void printQueueInfo() {
+        System.out.println("Stato Coda: " + (getQueue().getSize()) + "/" + getQueue().getMaxSize());
     }
 
     @Override
     public void onClientLeave(GenericActor client) {
         System.out.println("Cliente Uscito!");
-        System.out.println("Stato Coda: " + getQueue().getSize() + "/" + getQueue().getMaxSize());
+        printQueueInfo();
     }
 
     @Override
     public void onQueueFull() {
         System.out.println("Coda Piena!");
-        System.out.println("Stato Coda: " + getQueue().getSize() + "/" + getQueue().getMaxSize());
+        printQueueInfo();
     }
 
     @Override
