@@ -60,7 +60,7 @@ public abstract class BaseRemoteEmployee implements RemoteEmployeeListener {
             sendMessage(MESSAGE_EMPLOYEE);
         else if (message.contains(MESSAGE_CLIENT_ID)) {
             onClientDone(getId(message));
-            sendMessage(MESSAGE_EMPLOYEE); //TODO add some delay
+            sendMessage(MESSAGE_EMPLOYEE); //TODO remove this to work only with 1 client per session
         }
     }
 

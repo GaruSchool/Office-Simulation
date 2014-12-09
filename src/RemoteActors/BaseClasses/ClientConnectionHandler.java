@@ -22,7 +22,7 @@ public class ClientConnectionHandler extends Thread {
     public void run() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            while (socket.isConnected()) {
+            while (socket.isConnected()) { //TODO add some delay in order to simulate a real office (?)
                 listener.onEmployeeMessageRecived(this, reader.readLine());
             }
         } catch (IOException e) {
