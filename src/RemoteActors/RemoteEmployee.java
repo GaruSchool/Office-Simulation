@@ -18,7 +18,7 @@ public class RemoteEmployee implements RemoteEmployeeListener {
 
     private Socket socket;
 
-    private ConnectedHandler handler;
+    private ClientConnectionHandler handler;
 
     public void connect(String ip, int port) {
         try {
@@ -31,7 +31,7 @@ public class RemoteEmployee implements RemoteEmployeeListener {
     }
 
     private void onConnected() {
-        this.handler = new ConnectedHandler(socket, this);
+        this.handler = new ClientConnectionHandler(socket, this);
         this.handler.start();
     }
 
@@ -54,6 +54,11 @@ public class RemoteEmployee implements RemoteEmployeeListener {
             sendMessage(MESSAGE_EMPLOYEE);
         else if (message.contains(MESSAGE_CLIENT_ID))
             onClientDone(message);
+    }
+
+    @Override
+    public void onEmployeeDisposed(ClientConnectionHandler employee) {
+
     }
 
     private void onClientDone(String message) {

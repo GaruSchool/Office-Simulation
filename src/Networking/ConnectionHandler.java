@@ -24,7 +24,7 @@ public class ConnectionHandler extends Thread {
     public void run() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            while (!this.isInterrupted() && this.socket.isConnected()) {
+            while (!this.isInterrupted() && !this.socket.isClosed()) {
                 String message = reader.readLine();
                 if (message.equals(ActorConnectionListener.MESSAGE_CLIENT))
                     listener.onActorMessageRecived(this, GenericActor.ACTOR_CLIENT);
@@ -42,11 +42,13 @@ public class ConnectionHandler extends Thread {
 
     public void dispose() {
         try {
-            this.socket.close();
+            if (!this.socket.isClosed())
+                this.socket.close();
             this.interrupt();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        listener.onActorDisposed(this);
     }
 
     public void sendMessage(String message) {

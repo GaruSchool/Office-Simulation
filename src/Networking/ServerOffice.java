@@ -53,6 +53,11 @@ public class ServerOffice implements ActorConnectionListener {
             actorListener.onActorAction(new GenericActor(handler, actorType));
     }
 
+    @Override
+    public void onActorDisposed(ConnectionHandler handler) {
+        this.handlers.remove(handler);
+    }
+
     public void onClientRemoved(GenericActor actor) {
         actor.getHandler().sendMessage(ActorConnectionListener.MESSAGE_CLIENT_EXITED);
         actor.getHandler().dispose();

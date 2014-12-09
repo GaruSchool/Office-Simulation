@@ -10,4 +10,6 @@ public interface ActorConnectionListener {
     public static final String MESSAGE_CLIENT_EXITED = "#CLIENT_EXITED";
 
     public void onActorMessageRecived(ConnectionHandler handler, int actorType);
+
+    public void onActorDisposed(ConnectionHandler handler);
 }
