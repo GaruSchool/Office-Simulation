@@ -33,6 +33,7 @@ public class RemoteEmployee implements RemoteEmployeeListener {
     private void onConnected() {
         this.handler = new ConnectedHandler(socket, this);
         this.handler.start();
+        sendMessage(MESSAGE_EMPLOYEE);
     }
 
 

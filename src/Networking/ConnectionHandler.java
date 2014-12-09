@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by cccp on 04/12/2014.
@@ -35,9 +36,9 @@ public class ConnectionHandler extends Thread {
 
             }
         } catch (IOException e) {
-            e.printStackTrace();
-
+            this.dispose();
         }
+
     }
 
     public void dispose() {
@@ -45,7 +46,7 @@ public class ConnectionHandler extends Thread {
             this.socket.close();
             this.interrupt();
         } catch (IOException e) {
-            e.printStackTrace();
+            // NULLA
         }
     }
 

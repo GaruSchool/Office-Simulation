@@ -1,5 +1,7 @@
 package RemoteActors;
 
+import Helpers.InputHelper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +11,7 @@ import java.net.Socket;
 /**
  * Created by t.garuglieri on 05/12/14.
  */
-public class RemoteClient {
+public class RemoteClient extends RemoteClientInterface {
 
 
     public static final String MESSAGE_CLIENT = "#CLIENT_ENTERED";
@@ -22,19 +24,27 @@ public class RemoteClient {
             this.socket = new Socket(ip, port);
             this.onConnected();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Impossibile connettersi al server");
         }
     }
 
     private void onConnected() {
-        sendMessage(MESSAGE_CLIENT);
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
 
+        try {
+
+            InputHelper.getInputInterface(InputHelper.INPUT_INTERFACE_KEYBOARD).getInput();
+
+            sendMessage(MESSAGE_CLIENT);
+
+            onClientEntered();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             String response = reader.readLine();
 
-            if (response.equals(MESSAGE_CLIENT_EXITED))
+            if (response.equals(MESSAGE_CLIENT_EXITED)) {
+                onClientLeave();
                 this.socket.close();
+            }
 
 
         } catch (IOException e) {
@@ -55,4 +65,18 @@ public class RemoteClient {
         }
     }
 
+    @Override
+    public void onClientEntered() {
+        onClientQueued();
+    }
+
+    @Override
+    public void onClientLeave() {
+
+    }
+
+    @Override
+    public void onClientQueued() {
+
+    }
 }
