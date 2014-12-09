@@ -1,4 +1,4 @@
-package RemoteActors;
+package RemoteActors.BaseClasses;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,12 +30,13 @@ public class ClientConnectionHandler extends Thread {
         }
     }
 
-    private void dispose() {
-
+    public void dispose() {
         try {
             if (!this.socket.isClosed())
                 this.socket.close();
             this.interrupt();
+
+            listener.onEmployeeDisposed(this);
         } catch (IOException e) {
             //TODO NULL
         }

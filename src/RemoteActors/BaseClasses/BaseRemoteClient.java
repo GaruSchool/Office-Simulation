@@ -1,4 +1,4 @@
-package RemoteActors;
+package RemoteActors.BaseClasses;
 
 import Helpers.InputHelper;
 
@@ -11,7 +11,7 @@ import java.net.Socket;
 /**
  * Created by t.garuglieri on 05/12/14.
  */
-public class RemoteClient extends RemoteClientInterface {
+public abstract class BaseRemoteClient {
 
 
     public static final String MESSAGE_CLIENT = "#CLIENT_ENTERED";
@@ -31,18 +31,18 @@ public class RemoteClient extends RemoteClientInterface {
     private void onConnected() {
 
         try {
-
+            onClientEntered();
             InputHelper.getInputInterface(InputHelper.INPUT_INTERFACE_KEYBOARD).getInput();
 
             sendMessage(MESSAGE_CLIENT);
 
-            onClientEntered();
+            onClientQueued();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             String response = reader.readLine();
 
             if (response.equals(MESSAGE_CLIENT_EXITED)) {
-                onClientLeave();
+                onClientLeft();
                 this.socket.close();
             }
 
@@ -65,18 +65,9 @@ public class RemoteClient extends RemoteClientInterface {
         }
     }
 
-    @Override
-    public void onClientEntered() {
-        onClientQueued();
-    }
+    public abstract void onClientEntered();
 
-    @Override
-    public void onClientLeave() {
+    public abstract void onClientQueued();
 
-    }
-
-    @Override
-    public void onClientQueued() {
-
-    }
+    public abstract void onClientLeft();
 }

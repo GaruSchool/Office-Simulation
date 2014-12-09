@@ -64,6 +64,4 @@ public class QueueManager {
     public int getMaxSize() {
         return clients.getMaxSize();
     }
-
-
 }

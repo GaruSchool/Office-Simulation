@@ -1,7 +1,8 @@
 package Test;
 
-import RemoteActors.RemoteEmployee;
-import Simulation.Office;
+import RemoteActors.Implementations.RemoteEmployee;
+import Simulation.BaseOffice;
+
 
 /**
  * Created by t.garuglieri on 05/12/14.
@@ -11,7 +12,7 @@ public class EmployeeTest {
         new Thread() {
             @Override
             public void run() {
-                new RemoteEmployee().connect("127.0.0.1", Office.DEFAULT_PORT);
+                new RemoteEmployee().connect("127.0.0.1", BaseOffice.DEFAULT_PORT);
             }
         }.start();
 

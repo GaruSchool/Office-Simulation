@@ -26,6 +26,8 @@ public class GenericCircularBuffer<T> {
     }
 
     public int size() {
+        if (isEmpty())
+            return 0;
         if (testa > coda)
             return testa - coda;
         return maxSize - coda + testa;

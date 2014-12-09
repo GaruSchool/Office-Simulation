@@ -1,4 +1,4 @@
-package RemoteActors;
+package RemoteActors.BaseClasses;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,7 +7,7 @@ import java.net.Socket;
 /**
  * Created by t.garuglieri on 05/12/14.
  */
-public class RemoteEmployee implements RemoteEmployeeListener {
+public abstract class BaseRemoteEmployee implements RemoteEmployeeListener {
 
 
     public static final String MESSAGE_CLIENT = "#CLIENT_ENTERED";
@@ -24,13 +24,13 @@ public class RemoteEmployee implements RemoteEmployeeListener {
         try {
             this.socket = new Socket(ip, port);
             this.onConnected();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void onConnected() {
+        onEmployeeEntered();
         this.handler = new ClientConnectionHandler(socket, this);
         this.handler.start();
         sendMessage(MESSAGE_EMPLOYEE);
@@ -41,11 +41,16 @@ public class RemoteEmployee implements RemoteEmployeeListener {
         try {
             new PrintWriter(socket.getOutputStream(), true).println(message);
         } catch (IOException e) {
-            try {
+            closeAndDispose();
+        }
+    }
+
+    private void closeAndDispose() {
+        try {
+            if (!socket.isClosed())
                 socket.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            handler.dispose();
+        } catch (IOException e) {
         }
     }
 
@@ -53,21 +58,25 @@ public class RemoteEmployee implements RemoteEmployeeListener {
     public void onEmployeeMessageRecived(ClientConnectionHandler handler, String message) {
         if (message.equals(MESSAGE_QUEUE_EMPTY))
             sendMessage(MESSAGE_EMPLOYEE);
-        else if (message.contains(MESSAGE_CLIENT_ID))
-            onClientDone(message);
+        else if (message.contains(MESSAGE_CLIENT_ID)) {
+            onClientDone(getId(message));
+            sendMessage(MESSAGE_EMPLOYEE); //TODO add some delay
+        }
     }
 
     @Override
     public void onEmployeeDisposed(ClientConnectionHandler employee) {
-
-    }
-
-    private void onClientDone(String message) {
-        System.out.println(getId(message));
+        onEmployeeExited();
     }
 
     private String getId(String message) {
         return message.replaceAll(MESSAGE_CLIENT_ID, "").replaceAll(" ", "");
     }
+
+    public abstract void onClientDone(String clientID);
+
+    public abstract void onEmployeeEntered();
+
+    public abstract void onEmployeeExited();
 
 }

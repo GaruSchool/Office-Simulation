@@ -1,4 +1,4 @@
-package RemoteActors;
+package RemoteActors.BaseClasses;
 
 /**
  * Created by t.garuglieri on 05/12/14.

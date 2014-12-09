@@ -1,6 +1,6 @@
 package Test;
 
-import RemoteActors.RemoteClient;
+import RemoteActors.Implementations.RemoteClient;
 import Simulation.BaseOffice;
 
 /**
