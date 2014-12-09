@@ -49,7 +49,7 @@ public class RemoteEmployee implements RemoteEmployeeListener {
     }
 
     @Override
-    public void onEmployeeMessageRecived(String message) {
+    public void onEmployeeMessageRecived(ClientConnectionHandler handler, String message) {
         if (message.equals(MESSAGE_QUEUE_EMPTY))
             sendMessage(MESSAGE_EMPLOYEE);
         else if (message.contains(MESSAGE_CLIENT_ID))

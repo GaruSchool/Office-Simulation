@@ -1,21 +1,20 @@
 package Test;
 
+import Networking.ServerOffice;
+import RemoteActors.RemoteClient;
 import Simulation.BaseOffice;
-import Simulation.PosteOffice;
 
 /**
- * Created by cccp on 04/12/2014.
+ * Created by t.garuglieri on 09/12/14.
  */
-public class OfficeSimulationTest {
+public class ClientTest {
 
     public static void main(String[] args) {
-
         new Thread() {
             @Override
             public void run() {
-                new PosteOffice().open();
+                new RemoteClient().connect("127.0.0.1", BaseOffice.DEFAULT_PORT);
             }
         }.start();
     }
-
 }

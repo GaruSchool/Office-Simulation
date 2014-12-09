@@ -23,7 +23,6 @@ public class ClientConnectionHandler extends Thread {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             while (socket.isConnected()) {
-
                 listener.onEmployeeMessageRecived(this, reader.readLine());
             }
         } catch (IOException e) {

@@ -1,14 +1,14 @@
 package Test;
 
 import RemoteActors.RemoteEmployee;
-import Simulation.Office;
+import Simulation.BaseOffice;
 
 /**
  * Created by t.garuglieri on 05/12/14.
  */
 public class EmployeeTest {
     public static void main(String[] args) {
-        new RemoteEmployee().connect("127.0.0.1", Office.DEFAULT_PORT);
+        new RemoteEmployee().connect("127.0.0.1", BaseOffice.DEFAULT_PORT);
 
     }
 }

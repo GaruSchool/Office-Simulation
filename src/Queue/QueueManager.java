@@ -56,4 +56,14 @@ public class QueueManager {
             return this.clients.isEmpty();
         }
     }
+
+    public int getSize() {
+        return clients.size();
+    }
+
+    public int getMaxSize() {
+        return clients.getMaxSize();
+    }
+
+
 }
