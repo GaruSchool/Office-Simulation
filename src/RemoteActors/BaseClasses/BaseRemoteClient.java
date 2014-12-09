@@ -32,7 +32,7 @@ public abstract class BaseRemoteClient {
 
         try {
             onClientEntered();
-            InputHelper.getInputInterface(InputHelper.INPUT_INTERFACE_DELAYED).getInput();
+            InputHelper.getInputInterface(InputHelper.INPUT_INTERFACE_KEYBOARD).getInput();
 
             sendMessage(MESSAGE_CLIENT);
 
